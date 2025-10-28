@@ -1,0 +1,47 @@
+.languageselector {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  animation-name: LanguageselectorInitialization;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  background: var(--surface);
+}
+.languageselector-closing {
+  animation-name: LanguageselectorClosing;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.languageselector-grid {
+  position: relative;
+  display: grid;
+  overflow-y: scroll;
+}
+.languageselector-closeicon {
+  position: absolute;
+  top: 1%;
+  right: 1%;
+}
+@keyframes LanguageselectorInitialization {
+  0% {
+    transform: translate(0, -50vh);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+@keyframes LanguageselectorClosing {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -50vh);
+    opacity: 0;
+  }
+}
