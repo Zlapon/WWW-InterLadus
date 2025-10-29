@@ -1,5 +1,8 @@
 .languageselector {
   position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   inset: 0;
   width: 100vw;
   height: 100vh;
@@ -7,7 +10,7 @@
   animation-duration: 0.3s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
-  background: var(--surface);
+  background: var(--bg-light);
 }
 .languageselector-closing {
   animation-name: LanguageselectorClosing;
@@ -18,12 +21,24 @@
 .languageselector-grid {
   position: relative;
   display: grid;
-  overflow-y: scroll;
+  height: 100%;
+  width: 70%;
+  grid-template-columns: repeat(4, 3fr);
+  grid-auto-rows: 20rem;
+  font-size: 4rem;
+  row-gap: 1rem;
 }
 .languageselector-closeicon {
   position: absolute;
   top: 1%;
   right: 1%;
+}
+.languageselector-language {
+  color: var(--text);
+  cursor: pointer;
+}
+.languageselector-language-selected {
+  color: var(--text-muted);
 }
 @keyframes LanguageselectorInitialization {
   0% {

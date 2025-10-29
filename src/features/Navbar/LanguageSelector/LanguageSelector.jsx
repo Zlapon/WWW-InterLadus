@@ -2,54 +2,78 @@ import "./languageselector.css";
 import { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
+import LanguageIcon from "@mui/icons-material/Language";
 function LanguageSelector({ visible, setVisible }) {
-  const [closing, setClosing] = useState(false);
-  const i18n = useTranslation();
+  const [isClosing, setIsClosing] = useState(false);
+  const { i18n } = useTranslation();
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
   const languages = [
     { code: "en", lang: "English" },
     { code: "fr", lang: "Français" },
-    { code: "de", lang: "deutsch" },
+    { code: "de", lang: "Deutsch" },
     { code: "ar", lang: "العربية" },
+    { code: "it", lang: "Italiano" },
   ];
   const animationDuration = 300;
 
   useEffect(() => {
-    if (closing) {
+    if (isClosing) {
       const timer = setTimeout(() => {
         setVisible(false);
+        setIsClosing(false);
       }, animationDuration);
 
       return () => clearTimeout(timer);
     }
-  }, [visible, setVisible, closing]);
-
-  if (!visible && !closing) return null;
-
+  }, [setVisible, isClosing]);
+  function languageSelected(language) {
+    i18n.changeLanguage(language.code).catch((err) => console.log(err));
+    setCurrentLanguage(i18n.language);
+  }
   return (
-    <div
-      className={`languageselector ${closing && "languageselector-closing"}`}>
-      <div className="languageselector-grid">
-        {languages.map((language) => (
-          <div
-            key={language.code}
-            onClick={() => {
-              i18n.changeLanguage(language.code);
-            }}
-            className={`languageselector-language ${
-              language.lang === i18n && "languageselector-language-selected"
-            }`}>
-            {language.lang}
+    <>
+      <LanguageIcon
+        sx={{ fontSize: 16, cursor: "pointer" }}
+        onClick={() => setVisible(true)}
+      />{" "}
+      {visible && (
+        <div
+          className={`languageselector ${
+            isClosing && "languageselector-closing"
+          }`}>
+          <div className="languageselector-grid">
+            {languages.map((language) => (
+              <div key={language.code}>
+                <div
+                  onClick={() => {
+                    languageSelected(language);
+                  }}
+                  disabled={currentLanguage === language.code && true}
+                  className={`languageselector-language ${
+                    currentLanguage === language.code
+                      ? "languageselector-language-selected"
+                      : ""
+                  }`}>
+                  {language.lang}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div
-        className="languageselector-closeicon"
-        onClick={() => {
-          setClosing(true);
-        }}>
-        <CloseIcon sx={{ fontSize: 40 }} />
-      </div>
-    </div>
+          <div
+            className="languageselector-closeicon"
+            onClick={() => {
+              setIsClosing(true);
+            }}>
+            <CloseIcon
+              sx={{ fontSize: 40, cursor: "pointer" }}
+              onClick={() => {
+                setIsClosing(true);
+              }}
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
