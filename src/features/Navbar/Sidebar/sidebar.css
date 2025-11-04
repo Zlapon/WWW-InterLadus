@@ -4,28 +4,44 @@
 .sidebar > div {
   display: flex;
   gap: 5rem;
-  margin-left: 6rem;
+  align-items: center;
+  justify-content: center;
 }
 .sidebar-auth {
   margin-bottom: 3rem;
+  gap: 20re;
 }
 .sidebar-auth a {
   color: var(--primary);
-  font-size: 3rem;
+  font-size: 2.2rem;
+  border: 0.45rem solid var(--primary);
+  border-radius: 1.5rem;
+  padding: 2rem 16rem 2rem 16rem;
   cursor: pointer;
-  transition: color 0.3s ease, color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 .sidebar-auth > a:hover {
-  color: var(--secondary-hover);
+  background-color: var(--primary);
+  color: var(--bg);
 }
 .sidebar-links {
   flex-direction: column;
 }
 .sidebar-links a {
+  display: inline-block;
+  width: fit-content;
   color: var(--text);
   font-size: 5rem;
   cursor: pointer;
   transition: color 0.3s ease, color 0.3s ease;
+}
+.sidebar-links > a:hover {
+  color: var(--text-muted);
+}
+.sidebar-icons {
+  display: flex;
+
+  gap: 2rem;
 }
 @media (max-width: 768px) {
   .sidebar-container {
@@ -39,12 +55,12 @@
     padding: 8rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 5rem;
     animation-name: SidebarInitialization;
     animation-duration: 0.3s;
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
-    background-color: var(--secondary);
+    background: var(--gradient);
   }
   .sidebar-closing {
     animation-name: SidebarClosing;

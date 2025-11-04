@@ -6,26 +6,35 @@ import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
-function Sidebar({ languageSelectorVisible, setLanguageSelectorVisible }) {
+import { useDispatch, useSelector } from "react-redux";
+import { setIsSidebarVisible } from "../NavbarSlice";
+function Sidebar() {
+  const dispatch = useDispatch();
+  const visible = useSelector((state) => state.navbar.isSidebarVisible);
+  const languageSelectorVisible = useSelector(
+    (state) => state.navbar.isLanguageSelectorVisible
+  );
   const { t } = useTranslation("translation", {
     keyPrefix: "navbar.links",
   });
   const [isClosing, setIsClosing] = useState(false);
-  const [visible, setVisible] = useState(false);
   const animationDuration = 300;
 
   useEffect(() => {
     if (isClosing) {
       const timer = setTimeout(() => {
-        setVisible(false);
+        dispatch(setIsSidebarVisible(false));
         setIsClosing(false);
       }, animationDuration);
 
       return () => clearTimeout(timer);
     }
-  }, [setVisible, isClosing]);
+  }, [dispatch, isClosing]);
   const showSidebar = () => {
-    setVisible(true);
+    dispatch(setIsSidebarVisible(true));
+  };
+  const closeSidebar = () => {
+    setIsClosing(true);
   };
   return (
     <div className="sidebar-container">
@@ -43,24 +52,23 @@ function Sidebar({ languageSelectorVisible, setLanguageSelectorVisible }) {
             <NavLink to={"/about"}>{t("about")}</NavLink>
           </div>
           <div className="sidebar-auth">
-            <LanguageSelector
-              visible={languageSelectorVisible}
-              setVisible={setLanguageSelectorVisible}
-            />
-            <ThemeToggle />
             <NavLink to={"/auth/login"}>{t("login")}</NavLink>
+          </div>
+          <div className="sidebar-icons">
+            <ThemeToggle iconSize={40} />
+            <LanguageSelector iconSize={40} />
           </div>
           <div
             className="languageselector-closeicon"
             onClick={() => {
               setIsClosing(true);
             }}>
-            <CloseIcon
-              sx={{ fontSize: 40, cursor: "pointer" }}
-              onClick={() => {
-                setIsClosing(true);
-              }}
-            />
+            {!languageSelectorVisible && (
+              <CloseIcon
+                sx={{ fontSize: 40, cursor: "pointer" }}
+                onClick={closeSidebar}
+              />
+            )}
           </div>
         </div>
       )}

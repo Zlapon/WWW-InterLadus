@@ -25,7 +25,7 @@
   width: 70%;
   grid-template-columns: repeat(4, 3fr);
   grid-auto-rows: 20rem;
-  font-size: 4rem;
+
   row-gap: 1rem;
 }
 .languageselector-closeicon {
@@ -36,6 +36,7 @@
 .languageselector-language {
   color: var(--text);
   cursor: pointer;
+  font-size: 4rem;
 }
 .languageselector-language-selected {
   color: var(--text-muted);
@@ -58,5 +59,23 @@
   100% {
     transform: translate(0, -50vh);
     opacity: 0;
+  }
+}
+@media (max-width: 768px) {
+  .languageselector-grid {
+    width: 90%;
+    font-size: 3rem;
+  }
+}
+@media (max-width: 600px) {
+  .languageselector-grid {
+    width: 95%;
+    font-size: 2rem;
+  }
+}
+@media (max-width: 550px) {
+  .languageselector-grid {
+    width: 99%;
+    font-size: 1.2rem;
   }
 }

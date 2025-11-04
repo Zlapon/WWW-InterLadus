@@ -3,11 +3,9 @@ import { NavLink } from "react-router-dom";
 import LanguageSelector from "./LanguageSelector/LanguageSelector";
 import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import Sidebar from "./Sidebar/Sidebar";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 function NavBar() {
-  const [languageSelectorVisible, setLanguageSelectorVisible] = useState(false);
   const { t } = useTranslation("translation", {
     keyPrefix: "navbar.links",
   });
@@ -20,17 +18,11 @@ function NavBar() {
         <NavLink to={"/about"}>{t("about")}</NavLink>
       </div>
       <div className="nav-auth">
-        <LanguageSelector
-          visible={languageSelectorVisible}
-          setVisible={setLanguageSelectorVisible}
-        />
-        <ThemeToggle />
+        <LanguageSelector iconSize={18} />
+        <ThemeToggle iconSize={18} />
         <NavLink to={"/auth/login"}>{t("login")}</NavLink>
       </div>
-      <Sidebar
-        languageSelectorVisible={languageSelectorVisible}
-        setLanguageSelectorVisible={setLanguageSelectorVisible}
-      />
+      <Sidebar />
     </nav>
   );
 }

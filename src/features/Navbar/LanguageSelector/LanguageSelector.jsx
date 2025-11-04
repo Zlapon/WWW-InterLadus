@@ -3,7 +3,13 @@ import { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
-function LanguageSelector({ visible, setVisible }) {
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLanguageSelectorVisible } from "../NavbarSlice";
+function LanguageSelector({ iconSize }) {
+  const dispatch = useDispatch();
+  const visible = useSelector(
+    (state) => state.navbar.isLanguageSelectorVisible
+  );
   const [isClosing, setIsClosing] = useState(false);
   const { i18n } = useTranslation();
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
@@ -19,22 +25,29 @@ function LanguageSelector({ visible, setVisible }) {
   useEffect(() => {
     if (isClosing) {
       const timer = setTimeout(() => {
-        setVisible(false);
+        dispatch(setIsLanguageSelectorVisible(false));
         setIsClosing(false);
       }, animationDuration);
 
       return () => clearTimeout(timer);
     }
-  }, [setVisible, isClosing]);
+  }, [dispatch, isClosing]);
   function languageSelected(language) {
+    if (language === i18n.code) {
+      return 0;
+    }
     i18n.changeLanguage(language.code).catch((err) => console.log(err));
     setCurrentLanguage(i18n.language);
+    setIsClosing(true);
+  }
+  function showLanguageSelector() {
+    dispatch(setIsLanguageSelectorVisible(true));
   }
   return (
     <>
       <LanguageIcon
-        sx={{ fontSize: 16, cursor: "pointer" }}
-        onClick={() => setVisible(true)}
+        sx={{ fontSize: iconSize, cursor: "pointer" }}
+        onClick={showLanguageSelector}
       />{" "}
       {visible && (
         <div

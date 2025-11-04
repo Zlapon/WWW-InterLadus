@@ -2,7 +2,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
 import { useState, useEffect } from "react";
 
-function ThemeToggle() {
+function ThemeToggle({ iconSize }) {
   const savedTheme = localStorage.getItem("theme");
   const [theme, setTheme] = useState(
     savedTheme ||
@@ -20,12 +20,12 @@ function ThemeToggle() {
   return theme === "light" ? (
     <NightlightRoundIcon
       onClick={handleToggle}
-      sx={{ fontSize: 16, cursor: "pointer" }}
+      sx={{ fontSize: iconSize, cursor: "pointer" }}
     />
   ) : (
     <LightModeIcon
       onClick={handleToggle}
-      sx={{ fontSize: 16, cursor: "pointer" }}
+      sx={{ fontSize: iconSize, cursor: "pointer" }}
     />
   );
 }
